@@ -19,7 +19,7 @@ output application/json
 {
     "status" : "success gift",
     "date" : now(),
-    "id" : now()
+    
      
 }        ]]></ee:set-payload>
 			</ee:message>
