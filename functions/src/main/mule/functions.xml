@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="254dd54e-6b47-4284-a602-e3ad0e5685da" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="45b455e8-cc1c-4952-a618-14fa862d1d62" file="properites/${env}.yaml" />
+	<flow name="functionsFlow" doc:id="0946b775-2708-44dc-8aff-46b9f6a218f1" >
+		<http:listener doc:name="Listener" doc:id="cf63fb0e-3943-4dda-bdcd-1aa959676280" config-ref="HTTP_Listener_config" path="${http.path}"/>
+		<ee:transform doc:name="Transform Message" doc:id="54ff4262-b267-4ab0-8989-4cdec519d43a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "status" : "success gift",
+    "date" : now(),
+    "id" : now()
+     
+}        ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
